@@ -256,6 +256,105 @@ body {
     color: var(--text-light);
 }
 
+/* 배송 특징 섹션 */
+.delivery-features {
+    padding: 100px 0;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+    position: relative;
+    overflow: hidden;
+}
+
+.delivery-features .section-title {
+    color: var(--white);
+}
+
+.delivery-features .section-title::after {
+    background: #00d4ff;
+}
+
+.delivery-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    align-items: stretch;
+}
+
+.delivery-card {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 20px;
+    overflow: hidden;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.delivery-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px rgba(0, 212, 255, 0.2);
+}
+
+.delivery-card.featured {
+    transform: scale(1.05);
+    border: 2px solid #00d4ff;
+    box-shadow: 0 0 30px rgba(0, 212, 255, 0.3);
+}
+
+.delivery-card.featured:hover {
+    transform: scale(1.05) translateY(-10px);
+}
+
+.delivery-image {
+    width: 100%;
+    height: 250px;
+    overflow: hidden;
+}
+
+.delivery-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s;
+}
+
+.delivery-card:hover .delivery-image img {
+    transform: scale(1.1);
+}
+
+.delivery-info {
+    padding: 25px;
+    text-align: center;
+}
+
+.delivery-info h3 {
+    font-size: 1.4rem;
+    color: var(--white);
+    margin-bottom: 10px;
+}
+
+.delivery-info p {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.95rem;
+}
+
+/* 홍보 영상 섹션 */
+.promo-video {
+    padding: 100px 0;
+    background: var(--white);
+}
+
+.video-wrapper {
+    max-width: 900px;
+    margin: 0 auto;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: var(--shadow-lg);
+}
+
+.video-wrapper video {
+    width: 100%;
+    display: block;
+}
+
 /* 상품 섹션 */
 .products {
     padding: 100px 0;
@@ -657,5 +756,22 @@ body {
 
     .section-title {
         font-size: 2rem;
+    }
+
+    .delivery-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .delivery-card.featured {
+        transform: none;
+        order: -1;
+    }
+
+    .delivery-card.featured:hover {
+        transform: translateY(-10px);
+    }
+
+    .delivery-image {
+        height: 200px;
     }
 }
