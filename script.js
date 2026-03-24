@@ -194,7 +194,7 @@ async function loadReservations() {
                     <td>${escapeHtml(row.phone || '')}</td>
                     <td>${escapeHtml(row.address || '')}</td>
                     <td>${escapeHtml(row.menu || '')}</td>
-                    <td>${escapeHtml(row.deliveryDate || '')}</td>
+                    <td>${formatDate(row.deliveryDate)}</td>
                     <td>${escapeHtml(row.message || '-')}</td>
                     <td>${escapeHtml(row.timestamp || '')}</td>
                 </tr>
@@ -226,6 +226,21 @@ function escapeHtml(text) {
     const div = document.createElement('div');
     div.textContent = text;
     return div.innerHTML;
+}
+
+// 날짜 포맷 함수 (날짜만 표시)
+function formatDate(dateStr) {
+    if (!dateStr) return '-';
+    try {
+        const date = new Date(dateStr);
+        return date.toLocaleDateString('ko-KR', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+        });
+    } catch {
+        return escapeHtml(dateStr);
+    }
 }
 
 // 새로고침 버튼 이벤트
