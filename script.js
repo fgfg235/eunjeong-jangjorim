@@ -50,7 +50,7 @@ document.getElementById('successModal').addEventListener('click', (e) => {
 
 // Google Sheets 연동 URL (사용자가 설정해야 함)
 // 아래 URL을 Google Apps Script 웹 앱 URL로 교체하세요
-const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbyNGz_9oPd3jNNIaOD_vgIzwBbmE4xsUL9tdHSFTxT5aZZ2mxTITc5nB0GTUP9F-ppTvQ/exec';
+const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxSlH31-ScmpV5a3WEdsVR1_TPKS11iqeCshwNy-RItA63r0d-ZQOcQ8Quj9xeux15apw/exec';
 
 // 폼 제출 처리
 document.getElementById('reservationForm').addEventListener('submit', async (e) => {
