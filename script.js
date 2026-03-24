@@ -170,11 +170,15 @@ async function loadReservations() {
     `;
 
     try {
-        const response = await fetch(GOOGLE_SCRIPT_URL, {
+        // 캐시 방지를 위해 타임스탬프 추가
+        const url = GOOGLE_SCRIPT_URL + '?t=' + Date.now();
+        const response = await fetch(url, {
             method: 'GET',
-            redirect: 'follow'
+            redirect: 'follow',
+            cache: 'no-store'
         });
         const text = await response.text();
+        console.log('서버 응답:', text.substring(0, 100));
         let data;
         try {
             data = JSON.parse(text);
