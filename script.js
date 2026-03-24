@@ -170,8 +170,18 @@ async function loadReservations() {
     `;
 
     try {
-        const response = await fetch(GOOGLE_SCRIPT_URL + '?action=getReservations');
-        const data = await response.json();
+        const response = await fetch(GOOGLE_SCRIPT_URL, {
+            method: 'GET',
+            redirect: 'follow'
+        });
+        const text = await response.text();
+        let data;
+        try {
+            data = JSON.parse(text);
+        } catch (parseError) {
+            console.error('응답 내용:', text);
+            throw new Error('JSON 파싱 실패');
+        }
 
         if (data && data.length > 0) {
             tbody.innerHTML = data.map(row => `
