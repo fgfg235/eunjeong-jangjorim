@@ -154,3 +154,68 @@ document.querySelectorAll('.about-card, .product-card, .contact-card').forEach(e
 
 // 콘솔에 로컬 저장된 예약 확인 방법 안내
 console.log('📋 로컬에 저장된 예약을 확인하려면: localStorage.getItem("eunjeong_reservations")');
+
+// 예약 목록 불러오기
+async function loadReservations() {
+    const tbody = document.getElementById('reservationsBody');
+
+    // 로딩 표시
+    tbody.innerHTML = `
+        <tr>
+            <td colspan="7" class="loading-cell">
+                <span class="loading-spinner"></span>
+                예약 목록을 불러오는 중...
+            </td>
+        </tr>
+    `;
+
+    try {
+        const response = await fetch(GOOGLE_SCRIPT_URL + '?action=getReservations');
+        const data = await response.json();
+
+        if (data && data.length > 0) {
+            tbody.innerHTML = data.map(row => `
+                <tr>
+                    <td>${escapeHtml(row.name || '')}</td>
+                    <td>${escapeHtml(row.phone || '')}</td>
+                    <td>${escapeHtml(row.address || '')}</td>
+                    <td>${escapeHtml(row.menu || '')}</td>
+                    <td>${escapeHtml(row.deliveryDate || '')}</td>
+                    <td>${escapeHtml(row.message || '-')}</td>
+                    <td>${escapeHtml(row.timestamp || '')}</td>
+                </tr>
+            `).join('');
+        } else {
+            tbody.innerHTML = `
+                <tr>
+                    <td colspan="7" class="no-data-cell">
+                        아직 예약이 없습니다.
+                    </td>
+                </tr>
+            `;
+        }
+    } catch (error) {
+        console.error('예약 목록 불러오기 실패:', error);
+        tbody.innerHTML = `
+            <tr>
+                <td colspan="7" class="no-data-cell">
+                    예약 목록을 불러올 수 없습니다.<br>
+                    <small style="color: #999;">Google Apps Script 설정을 확인해주세요.</small>
+                </td>
+            </tr>
+        `;
+    }
+}
+
+// HTML 이스케이프 함수 (XSS 방지)
+function escapeHtml(text) {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+}
+
+// 새로고침 버튼 이벤트
+document.getElementById('refreshBtn').addEventListener('click', loadReservations);
+
+// 페이지 로드 시 예약 목록 불러오기
+document.addEventListener('DOMContentLoaded', loadReservations);

@@ -562,6 +562,124 @@ body {
     cursor: not-allowed;
 }
 
+/* 예약 목록 섹션 */
+.reservations {
+    padding: 100px 0;
+    background: linear-gradient(180deg, var(--white) 0%, var(--background) 100%);
+}
+
+.reservations-controls {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 20px;
+}
+
+.refresh-button {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 24px;
+    background: var(--primary-color);
+    color: var(--white);
+    border: none;
+    border-radius: 10px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.3s, transform 0.2s;
+}
+
+.refresh-button:hover {
+    background: var(--primary-light);
+    transform: translateY(-2px);
+}
+
+.refresh-icon {
+    font-size: 1.1rem;
+}
+
+.reservations-table-wrapper {
+    overflow-x: auto;
+    background: var(--white);
+    border-radius: 15px;
+    box-shadow: var(--shadow);
+}
+
+.reservations-table {
+    width: 100%;
+    border-collapse: collapse;
+    min-width: 800px;
+}
+
+.reservations-table th,
+.reservations-table td {
+    padding: 15px 12px;
+    text-align: left;
+    border-bottom: 1px solid #eee;
+}
+
+.reservations-table th {
+    background: var(--primary-color);
+    color: var(--white);
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.reservations-table th:first-child {
+    border-radius: 15px 0 0 0;
+}
+
+.reservations-table th:last-child {
+    border-radius: 0 15px 0 0;
+}
+
+.reservations-table tbody tr:hover {
+    background: var(--background);
+}
+
+.reservations-table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.reservations-table td {
+    font-size: 0.95rem;
+    color: var(--text-color);
+}
+
+.loading-cell {
+    text-align: center !important;
+    padding: 40px !important;
+    color: var(--text-light);
+}
+
+.loading-spinner {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    border: 3px solid var(--secondary-color);
+    border-top-color: var(--primary-color);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin-right: 10px;
+    vertical-align: middle;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+.no-data-cell {
+    text-align: center !important;
+    padding: 40px !important;
+    color: var(--text-light);
+}
+
+.reservations-note {
+    text-align: center;
+    margin-top: 20px;
+    font-size: 0.9rem;
+    color: var(--text-light);
+}
+
 /* 연락처 섹션 */
 .contact {
     padding: 100px 0;

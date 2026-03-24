@@ -1,6 +1,6 @@
 # Google Sheets 연동 설정 가이드
 
-예약 데이터를 Google Sheets에 자동으로 저장하려면 아래 단계를 따라주세요.
+예약 데이터를 Google Sheets에 자동으로 저장하고 불러오려면 아래 단계를 따라주세요.
 
 ## 1단계: Google Sheets 생성
 
@@ -21,6 +21,7 @@
 2. 기존 코드를 모두 지우고 아래 코드 붙여넣기:
 
 ```javascript
+// 예약 데이터 저장 (POST 요청)
 function doPost(e) {
   try {
     var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
@@ -44,8 +45,41 @@ function doPost(e) {
   }
 }
 
+// 예약 목록 조회 (GET 요청)
 function doGet(e) {
-  return ContentService.createTextOutput('Google Sheets API is running');
+  try {
+    var sheet = SpreadsheetApp.getActiveSpreadsheet().getActiveSheet();
+    var data = sheet.getDataRange().getValues();
+
+    // 첫 번째 행은 헤더이므로 제외
+    var headers = data[0];
+    var reservations = [];
+
+    for (var i = 1; i < data.length; i++) {
+      var row = data[i];
+      // 빈 행 건너뛰기
+      if (!row[0]) continue;
+
+      reservations.push({
+        name: row[0],
+        phone: row[1],
+        address: row[2],
+        menu: row[3],
+        deliveryDate: row[4],
+        message: row[5],
+        timestamp: row[6]
+      });
+    }
+
+    // 최신 예약이 위에 오도록 역순 정렬
+    reservations.reverse();
+
+    return ContentService.createTextOutput(JSON.stringify(reservations))
+      .setMimeType(ContentService.MimeType.JSON);
+  } catch(error) {
+    return ContentService.createTextOutput(JSON.stringify({error: error.toString()}))
+      .setMimeType(ContentService.MimeType.JSON);
+  }
 }
 ```
 
@@ -64,6 +98,15 @@ function doGet(e) {
 4. 권한 승인 (Google 계정 선택 후 "허용")
 5. **웹 앱 URL** 복사
 
+## ⚠️ 중요: 코드 수정 후 재배포
+
+**Google Apps Script 코드를 수정한 후에는 반드시 새로 배포해야 합니다!**
+
+1. **배포** > **배포 관리** 클릭
+2. 연필(수정) 아이콘 클릭
+3. 버전을 **새 버전**으로 선택
+4. **배포** 클릭
+
 ## 4단계: 웹사이트에 URL 적용
 
 1. `script.js` 파일 열기
@@ -81,12 +124,14 @@ function doGet(e) {
 
 1. 웹사이트에서 예약 폼 작성 후 제출
 2. Google Sheets에서 새 행이 추가되었는지 확인
+3. 예약 목록 메뉴에서 목록이 표시되는지 확인
 
 ## 문제 해결
 
 - **CORS 오류**: `mode: 'no-cors'` 설정으로 해결됨
 - **권한 오류**: Apps Script 배포 시 "모든 사용자" 액세스 권한 확인
 - **데이터 미저장**: 브라우저 개발자 도구(F12) > Console에서 오류 확인
+- **예약 목록이 안 보임**: Apps Script 코드 수정 후 **새 버전으로 재배포**했는지 확인
 
 ---
 

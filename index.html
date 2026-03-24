@@ -18,6 +18,7 @@
                 <li><a href="#home">홈</a></li>
                 <li><a href="#products">반찬 소개</a></li>
                 <li><a href="#reservation">배송 예약</a></li>
+                <li><a href="#reservations">예약 목록</a></li>
                 <li><a href="#contact">연락처</a></li>
             </ul>
             <div class="hamburger">
@@ -220,6 +221,46 @@
                     <span class="button-loading" style="display: none;">처리 중...</span>
                 </button>
             </form>
+        </div>
+    </section>
+
+    <!-- 예약 목록 섹션 -->
+    <section id="reservations" class="reservations">
+        <div class="container">
+            <h2 class="section-title">예약 목록</h2>
+            <p class="section-subtitle">친구들의 예약 현황을 확인하세요</p>
+
+            <div class="reservations-controls">
+                <button id="refreshBtn" class="refresh-button">
+                    <span class="refresh-icon">🔄</span> 새로고침
+                </button>
+            </div>
+
+            <div class="reservations-table-wrapper">
+                <table class="reservations-table">
+                    <thead>
+                        <tr>
+                            <th>이름</th>
+                            <th>연락처</th>
+                            <th>주소</th>
+                            <th>선택 메뉴</th>
+                            <th>배송 희망일</th>
+                            <th>요청사항</th>
+                            <th>예약일시</th>
+                        </tr>
+                    </thead>
+                    <tbody id="reservationsBody">
+                        <tr>
+                            <td colspan="7" class="loading-cell">
+                                <span class="loading-spinner"></span>
+                                예약 목록을 불러오는 중...
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <p class="reservations-note">* 데이터는 Google Sheets에서 실시간으로 불러옵니다</p>
         </div>
     </section>
 
